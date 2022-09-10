@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+  <script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript"><![CDATA[
+/**********************************************************************/
+
+function createXMLBlob  (s) {return new Blob([s],{type:"text/xml"})}
+function safeSendObject (o) {var c={};for(let p in o){c[p]=String(o[p])}return c}
+function dispatch       (e) {parent.postMessage(typeof e==="object"?safeSendObject(e):e,"*")}
+
+window.onload=()=>{
+  if(window.parent!==window){ // parent is not equal to window, so we know we're in an iframe
+    // dispatch(`<?xml version="1.0" encoding="UTF-8"?>${document.documentElement.outerHTML}`);
+    dispatch("cors bridge works. we are sending a message to a local window from a public file.")
+  }
+}
+
+/**********************************************************************/
+  ]]></script>
+
+</root>
