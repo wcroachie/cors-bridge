@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+  <script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript"><![CDATA[
+/**********************************************************************/
+window.onload=()=>{if(window.parent!==window){ // parent is not equal to window, so we know we're in an iframe
+
+  function createXMLBlob  (s) {return new Blob([s],{type:"text/xml"})}
+  function safeSendObject (o) {var c={};for(let p in o){c[p]=String(o[p])}return c}
+  function dispatch       (e) {parent.postMessage(typeof e==="object"?safeSendObject(e):e,"*")}
+
+  var publicImageURL = "https://pbs.twimg.com/profile_images/1568634287049555969/zFjDA2md_400x400.jpg";
+
+  var c = document.createElementNS("http://www.w3.org/1999/xhtml","canvas");
+  var loader = new Image();
+  loader.src=publicImageURL;
+  loader.onload=()=>{
+    c.width=loader.width;
+    c.height=loader.height;
+    var cx=c.getContext("2d");
+    cx.drawImage(loader,0,0,c.width,c.height);
+    var url=c.toDataURL("image/jpeg",0);
+    dispatch(url);
+  };
+
+}}
+
+/**********************************************************************/
+  ]]></script>
+
+</root>
